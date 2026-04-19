@@ -21,7 +21,7 @@ class TestBooksCollector:
 
         # проверяем, что добавилось именно две
         # словарь books_rating имеет длину 2
-        assert len(collector.books_genre) == 2
+        assert len(collector.get_books_genre()) == 2
 
     # напиши свои тесты ниже
     # чтобы тесты были независимыми в каждом из них создавай отдельный экземпляр класса BooksCollector()
@@ -53,7 +53,7 @@ class TestBooksCollector:
 
     #тест отсутвия книги с длиной наименования ноль символов и длиной 41 
     @pytest.mark.parametrize('book',['','Тайна Лунного моря: Поиск артефакта богов'])
-    def test_add_new_book_name_lower_limit_book_added(self, book):
+    def test_add_new_book_name_lower_limit_book_not_added(self, book):
          # создаем экземпляр (объект) класса BooksCollector
         collector = BooksCollector()
 
@@ -66,9 +66,20 @@ class TestBooksCollector:
     # тестируем устанавку жанра книге
     def test_set_book_genre_sucsess(self):
         collector = BooksCollector()
+        # добавляем книгу
         collector.add_new_book('Франкенштейн')
 
         #добавляем жанр книге
         collector.set_book_genre('Франкенштейн', 'Ужасы')
         #проверяем установку жанра
         assert collector.books_genre['Франкенштейн'] == 'Ужасы'
+
+    # тест отсутсвия устанавки жанра несуществующей книге
+    def test_set_book_genre_non_existent_book_not_set_genre(self):
+        collector = BooksCollector()
+        # добавляем книгу
+        collector.add_new_book('Другая книга')
+        #добавляем жанр несуществующей книге
+        collector.set_book_genre('Оно', 'Ужасы')
+        #проверяем установку жанра
+        assert 'Оно' not in collector.books_genre and collector.books_genre['Другая книга'] == ''
