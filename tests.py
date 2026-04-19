@@ -26,7 +26,7 @@ class TestBooksCollector:
     # напиши свои тесты ниже
     # чтобы тесты были независимыми в каждом из них создавай отдельный экземпляр класса BooksCollector()
 
-    #тест добавления дубликата книги
+    # тест добавления дубликата книги
     def test_add_new_book_duplicate_not_added(self):
          # создаем экземпляр (объект) класса BooksCollector
         collector = BooksCollector()
@@ -39,7 +39,7 @@ class TestBooksCollector:
         # словарь books_rating имеет длину 1
         assert len(collector.books_genre) == 1
 
-    #тест добавления книги с длиной наименования нижние граничные значения 1, 2 и верхние граничные значения 39, 40
+    # тест добавления книги с длиной наименования нижние граничные значения 1, 2 и верхние граничные значения 39, 40
     @pytest.mark.parametrize('book',['О','Мы','Убийство в восточном экспрессе номер 51','Звёздный рейд: Восстание киборгов Тартас'])
     def test_add_new_book_name_limit_values_book_added(self, book):
          # создаем экземпляр (объект) класса BooksCollector
@@ -51,7 +51,7 @@ class TestBooksCollector:
         # проверяем, что добавилась книга
         assert book in collector.books_genre.keys()
 
-    #тест отсутвия книги с длиной наименования ноль символов и длиной 41 
+    # тест отсутвия книги с длиной наименования ноль символов и длиной 41 
     @pytest.mark.parametrize('book',['','Тайна Лунного моря: Поиск артефакта богов'])
     def test_add_new_book_name_lower_limit_book_not_added(self, book):
          # создаем экземпляр (объект) класса BooksCollector
@@ -106,7 +106,7 @@ class TestBooksCollector:
         #проверяем жанр у книги с жанром
         assert collector.get_book_genre(book) == genre
 
-    #тест получения жанра несуществующей книги
+    # тест получения жанра несуществующей книги
     def test_get_book_genre_non_existent_book_genre_none(self):
         collector = BooksCollector()
         #проверяем жанр у книги с жанром
