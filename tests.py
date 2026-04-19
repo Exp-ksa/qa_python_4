@@ -119,10 +119,12 @@ class TestBooksCollector:
         collector.add_new_book('Дюна')
         collector.add_new_book('Основание')
         collector.add_new_book('Гиперион')
+        collector.add_new_book('Приключения Тома Соера')
         #добавляем жанр книге
         collector.set_book_genre('Дюна', 'Фантастика')
         collector.set_book_genre('Основание', 'Фантастика')
         collector.set_book_genre('Гиперион', 'Фантастика')
+        collector.set_book_genre('Приключения Тома Соера', 'Мультфильмы')
         # проверяем список
         assert ['Дюна','Основание','Гиперион'] == collector.get_books_with_specific_genre('Фантастика')
 
@@ -159,3 +161,20 @@ class TestBooksCollector:
         collector = BooksCollector()
         #проверяем получения пустого словаря  
         assert collector.get_books_genre()=={}    
+
+    # тест проверки возврата книг, подходящие детям
+    def test_get_books_for_children_add_book_child_list_book_child(self):
+        collector = BooksCollector()
+        # добавляем книгу
+        collector.add_new_book('Дюна')
+        collector.add_new_book('Приключения Шурика')
+        collector.add_new_book('Оно')
+        collector.add_new_book('Приключения Тома Соера')
+        #добавляем жанр книге
+        collector.set_book_genre('Дюна', 'Фантастика')
+        collector.set_book_genre('Приключения Шурика', 'Комедии')
+        collector.set_book_genre('Оно', 'Ужасы')
+        collector.set_book_genre('Приключения Тома Соера','Мультфильмы')
+        #проверяем список
+        assert collector.get_books_for_children()==['Дюна','Приключения Шурика','Приключения Тома Соера']
+        
