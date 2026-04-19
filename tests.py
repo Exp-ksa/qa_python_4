@@ -146,5 +146,16 @@ class TestBooksCollector:
         # проверяем список, что пуст
         assert collector.get_books_with_specific_genre('Комедии')==[] 
 
-    
-    
+    # тест получения словаря books_genre
+    def test_get_books_genre_add_book_list_book(self):
+        collector = BooksCollector()
+        # добавляем книгу
+        collector.add_new_book('Киберпанк 2077')    
+        #проверяем получения словаря
+        assert collector.get_books_genre()=={'Киберпанк 2077':''}
+
+    # тест получения пустого словаря books_genre
+    def test_get_books_genre_null_list_book_list_book_null(self):
+        collector = BooksCollector()
+        #проверяем получения пустого словаря  
+        assert collector.get_books_genre()=={}    
