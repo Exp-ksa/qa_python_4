@@ -196,3 +196,15 @@ class TestBooksCollector:
         # проверяем список избранных книг
         assert collector.favorites==[]
 
+    # тестируем удаляем книгу из Избранного
+    def test_delete_book_from_favorites_list_book_sucsess_delete_book(self):
+        collector = BooksCollector()
+        # добавляем книгу
+        collector.add_new_book('Домовенок Кузя')
+        # добавление книги в избранное
+        collector.add_book_in_favorites('Домовенок Кузя')
+        # удаление книги из избранного
+        collector.delete_book_from_favorites('Домовенок Кузя')
+        # проверяем список избранных книг
+        assert collector.favorites==[]
+
