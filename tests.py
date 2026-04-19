@@ -139,4 +139,12 @@ class TestBooksCollector:
         collector.set_book_genre('Сияние', 'Ужасы')
         # проверяем список, что пуст
         assert collector.get_books_with_specific_genre(genre)==[]
+
+    # тестируем вывод пустого списка книг с пустым списком книг
+    def test_get_books_with_specific_non_book_genre_list_null(self):
+        collector = BooksCollector()
+        # проверяем список, что пуст
+        assert collector.get_books_with_specific_genre('Комедии')==[] 
+
+    
     
