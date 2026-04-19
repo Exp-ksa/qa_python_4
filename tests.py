@@ -39,9 +39,9 @@ class TestBooksCollector:
         # словарь books_rating имеет длину 1
         assert len(collector.books_genre) == 1
 
-    #тест добавления книги с длиной наименования нижние граничные значения
-    @pytest.mark.parametrize('book',['О','Мы'])
-    def test_add_new_book_name_lower_limit_book_added(self, book):
+    #тест добавления книги с длиной наименования нижние граничные значения 1, 2 и верхние граничные значения 39, 40
+    @pytest.mark.parametrize('book',['О','Мы','Убийство в восточном экспрессе номер 51','Звёздный рейд: Восстание киборгов Тартас'])
+    def test_add_new_book_name_limit_values_book_added(self, book):
          # создаем экземпляр (объект) класса BooksCollector
         collector = BooksCollector()
 
@@ -50,6 +50,18 @@ class TestBooksCollector:
         
         # проверяем, что добавилась книга
         assert book in collector.books_genre.keys()
+
+    #тест отсутвия книги с длиной наименования ноль символов и длиной 41 
+    @pytest.mark.parametrize('book',['','Тайна Лунного моря: Поиск артефакта богов'])
+    def test_add_new_book_name_lower_limit_book_added(self, book):
+         # создаем экземпляр (объект) класса BooksCollector
+        collector = BooksCollector()
+
+        # добавляем книгу
+        collector.add_new_book(book)
+        
+        # проверяем, что добавилась книга
+        assert not book in collector.books_genre.keys()
 
     # тестируем устанавку жанра книге
     def test_set_book_genre_sucsess(self):
