@@ -111,3 +111,19 @@ class TestBooksCollector:
         collector = BooksCollector()
         #проверяем жанр у книги с жанром
         assert collector.get_book_genre('Умка') == None
+
+    # тестируем вывод списока книг с определённым жанром
+    def test_get_books_with_specific_genre_genre_list_book_genre(self):
+        collector = BooksCollector()
+        # добавляем книгу
+        collector.add_new_book('Дюна')
+        collector.add_new_book('Основание')
+        collector.add_new_book('Гиперион')
+        #добавляем жанр книге
+        collector.set_book_genre('Дюна', 'Фантастика')
+        collector.set_book_genre('Основание', 'Фантастика')
+        collector.set_book_genre('Гиперион', 'Фантастика')
+        # проверяем список
+        assert ['Дюна','Основание','Гиперион'] == collector.get_books_with_specific_genre('Фантастика')
+
+    
