@@ -177,4 +177,22 @@ class TestBooksCollector:
         collector.set_book_genre('Приключения Тома Соера','Мультфильмы')
         #проверяем список
         assert collector.get_books_for_children()==['Дюна','Приключения Шурика','Приключения Тома Соера']
-        
+
+    # тест добавления книги в Избранное
+    def test_add_book_in_favorites_add_book_list_favorites(self):
+        collector = BooksCollector()
+        # добавляем книгу
+        collector.add_new_book('Дюна')
+        # добавление книги в избранное
+        collector.add_book_in_favorites('Дюна')
+        # проверяем список избранных книг
+        assert collector.favorites==['Дюна']
+
+    # тест невозможность добавить книгу в избранное если список книг пуст
+    def test_add_book_in_favorites_no_book_list_favorites_null(self):
+        collector = BooksCollector()
+        # добавление книги в избранное
+        collector.add_book_in_favorites('Дюна')
+        # проверяем список избранных книг
+        assert collector.favorites==[]
+
