@@ -63,6 +63,17 @@ class TestBooksCollector:
         # проверяем, что добавилась книга
         assert not book in collector.books_genre.keys()
 
+    # тестируем у добавленной книги нет жанра
+    def test_add_new_book_added_book_not_genre(self):
+         # создаем экземпляр (объект) класса BooksCollector
+        collector = BooksCollector()
+
+        # добавляем книгу
+        collector.add_new_book('Мстители')
+    
+        # проверяем, что у книги нет жанра
+        assert collector.books_genre['Мстители'] == ''
+
     # тестируем устанавку жанра книге
     def test_set_book_genre_sucsess(self):
         collector = BooksCollector()
