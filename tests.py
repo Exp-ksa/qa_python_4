@@ -18,11 +18,24 @@ class TestBooksCollector:
         collector.add_new_book('Что делать, если ваш кот хочет вас убить')
 
         # проверяем, что добавилось именно две
-        # словарь books_rating, который нам возвращает метод get_books_rating, имеет длину 2
+        # словарь books_rating имеет длину 2
         assert len(collector.books_genre) == 2
 
     # напиши свои тесты ниже
     # чтобы тесты были независимыми в каждом из них создавай отдельный экземпляр класса BooksCollector()
+
+    #тест добавления дубликата книги
+    def test_add_new_book_duplicate_not_added(self):
+         # создаем экземпляр (объект) класса BooksCollector
+        collector = BooksCollector()
+
+        # добавляем две книги
+        collector.add_new_book('Битва за битвой')
+        collector.add_new_book('Битва за битвой')
+
+        # проверяем, что добавилась только одна книга
+        # словарь books_rating имеет длину 1
+        assert len(collector.books_genre) == 1
 
     # тестируем устанавку жанра книге
     def test_set_book_genre_sucsess(self):
