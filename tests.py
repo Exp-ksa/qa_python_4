@@ -208,3 +208,18 @@ class TestBooksCollector:
         # проверяем список избранных книг
         assert collector.favorites==[]
 
+    # получаем список Избранных книг из двух книг
+    def test_get_list_of_favorites_books_add_two_favorites_get_list(self):
+        collector = BooksCollector()
+        # добавляем книгу
+        collector.add_new_book('Дюна')
+        collector.add_new_book('Приключения Шурика')
+        collector.add_new_book('Оно')
+        collector.add_new_book('Приключения Тома Соера')
+        # добавляем книги в избранное
+        collector.add_book_in_favorites('Дюна')
+        collector.add_book_in_favorites('Оно')
+        # проверяем список избранных книг
+        assert collector.get_list_of_favorites_books()==['Дюна', 'Оно']
+    
+
