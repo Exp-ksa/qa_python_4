@@ -126,4 +126,17 @@ class TestBooksCollector:
         # проверяем список
         assert ['Дюна','Основание','Гиперион'] == collector.get_books_with_specific_genre('Фантастика')
 
+    # тестируем вывод пустого списка книг с жанром не из списка, пустым жаром и ввод заглавными жанра
+    @pytest.mark.parametrize('genre',['Ужас','','УЖАСЫ']) 
+    def test_get_books_with_specific_non_existent_genre_genre_list_null(self, genre):
+        collector = BooksCollector()
+        # добавляем книгу
+        collector.add_new_book('Оно')
+        collector.add_new_book('Сияние')
+        collector.add_new_book('Дракула')
+        #добавляем жанр книге
+        collector.set_book_genre('Оно', 'Ужасы')
+        collector.set_book_genre('Сияние', 'Ужасы')
+        # проверяем список, что пуст
+        assert collector.get_books_with_specific_genre(genre)==[]
     
