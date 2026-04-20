@@ -137,7 +137,7 @@ class TestBooksCollector:
         assert ['Дюна','Основание','Гиперион'] == collector.get_books_with_specific_genre('Фантастика')
 
     # тестируем вывод пустого списка книг жанра не из списка, пустого жанра и жанра в верхнем регистре
-    @pytest.mark.parametrize('genre',['Ужас','','УЖАСЫ']) 
+    @pytest.mark.parametrize('genre',['Ужас','','УЖАСЫ','Комедии']) 
     def test_get_books_with_specific_genre_returns_empty_for_invalid_genres(self, genre):
         collector = BooksCollector()
         # добавляем книгу
@@ -149,12 +149,6 @@ class TestBooksCollector:
         collector.set_book_genre('Сияние', 'Ужасы')
         # проверяем список, что пуст
         assert collector.get_books_with_specific_genre(genre)==[]
-
-    # тест: при пустой коллекции книг метод возвращает пустой список для любого жанра
-    def test_get_books_with_specific_genre_empty_collection_returns_empty(self):
-        collector = BooksCollector()
-        # проверяем список, что пуст
-        assert collector.get_books_with_specific_genre('Комедии')==[] 
 
     # тест получения словаря books_genre
     def test_get_books_genre_returns_dict_with_added_books(self):
@@ -230,4 +224,15 @@ class TestBooksCollector:
         # проверяем список избранных книг
         assert collector.get_list_of_favorites_books()==['Дюна', 'Оно']
     
+    # тест на повторное добавление книги в избранное
+    def test_add_book_in_favorites_does_not_add_duplicates(self):
+        collector = BooksCollector()
+        # добавляем книгу
+        collector.add_new_book('Шерлок Холмс')
+        # добавляем книги в избранное
+        collector.add_book_in_favorites('Шерлок Холмс')
+        collector.add_book_in_favorites('Шерлок Холмс')
+        # проверяем список избранных книг
+        assert collector.get_list_of_favorites_books()==['Шерлок Холмс']
+
 
