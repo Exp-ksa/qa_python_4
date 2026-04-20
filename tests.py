@@ -105,7 +105,7 @@ class TestBooksCollector:
 
     # тест получения жанра книги по её имени
     @pytest.mark.parametrize('book, genre',[['Тайна Коко','Мультфильмы']])
-    def test_get_book_genre_name_book_success_get_genre(self, book, genre):
+    def test_get_book_genre_returns_correct_genre_when_set(self, book, genre):
         collector = BooksCollector()
         # добавляем книгу
         collector.add_new_book(book)
@@ -115,13 +115,13 @@ class TestBooksCollector:
         assert collector.get_book_genre(book) == genre
 
     # тест получения жанра несуществующей книги
-    def test_get_book_genre_non_existent_book_genre_none(self):
+    def test_get_book_genre_returns_none_for_nonexistent_book(self):
         collector = BooksCollector()
         #проверяем жанр у книги с жанром
-        assert collector.get_book_genre('Умка') == None
+        assert collector.get_book_genre('Умка') is None
 
     # тестируем вывод списока книг с определённым жанром
-    def test_get_books_with_specific_genre_genre_list_book_genre(self):
+    def test_get_books_with_specific_genre_returns_correct_books(self):
         collector = BooksCollector()
         # добавляем книгу
         collector.add_new_book('Дюна')
@@ -136,9 +136,9 @@ class TestBooksCollector:
         # проверяем список
         assert ['Дюна','Основание','Гиперион'] == collector.get_books_with_specific_genre('Фантастика')
 
-    # тестируем вывод пустого списка книг с жанром не из списка, пустым жаром и ввод заглавными жанра
+    # тестируем вывод пустого списка книг жанра не из списка, пустого жанра и жанра в верхнем регистре
     @pytest.mark.parametrize('genre',['Ужас','','УЖАСЫ']) 
-    def test_get_books_with_specific_non_existent_genre_genre_list_null(self, genre):
+    def test_get_books_with_specific_genre_returns_empty_for_invalid_genres(self, genre):
         collector = BooksCollector()
         # добавляем книгу
         collector.add_new_book('Оно')
@@ -150,14 +150,14 @@ class TestBooksCollector:
         # проверяем список, что пуст
         assert collector.get_books_with_specific_genre(genre)==[]
 
-    # тестируем вывод пустого списка книг с пустым списком книг
-    def test_get_books_with_specific_non_book_genre_list_null(self):
+    # тест: при пустой коллекции книг метод возвращает пустой список для любого жанра
+    def test_get_books_with_specific_genre_empty_collection_returns_empty(self):
         collector = BooksCollector()
         # проверяем список, что пуст
         assert collector.get_books_with_specific_genre('Комедии')==[] 
 
     # тест получения словаря books_genre
-    def test_get_books_genre_add_book_list_book(self):
+    def test_get_books_genre_returns_dict_with_added_books(self):
         collector = BooksCollector()
         # добавляем книгу
         collector.add_new_book('Киберпанк 2077')    
@@ -165,29 +165,29 @@ class TestBooksCollector:
         assert collector.get_books_genre()=={'Киберпанк 2077':''}
 
     # тест получения пустого словаря books_genre
-    def test_get_books_genre_null_list_book_list_book_null(self):
+    def test_get_books_genre_returns_empty_dict_for_empty_collection(self):
         collector = BooksCollector()
         #проверяем получения пустого словаря  
         assert collector.get_books_genre()=={}    
 
     # тест проверки возврата книг, подходящие детям
-    def test_get_books_for_children_add_book_child_list_book_child(self):
+    def test_get_books_for_children_returns_only_child_friendly_books(self):
         collector = BooksCollector()
         # добавляем книгу
         collector.add_new_book('Дюна')
         collector.add_new_book('Приключения Шурика')
         collector.add_new_book('Оно')
-        collector.add_new_book('Приключения Тома Соера')
+        collector.add_new_book('Приключения Тома Сойера')
         #добавляем жанр книге
         collector.set_book_genre('Дюна', 'Фантастика')
         collector.set_book_genre('Приключения Шурика', 'Комедии')
         collector.set_book_genre('Оно', 'Ужасы')
-        collector.set_book_genre('Приключения Тома Соера','Мультфильмы')
+        collector.set_book_genre('Приключения Тома Сойера','Мультфильмы')
         #проверяем список
-        assert collector.get_books_for_children()==['Дюна','Приключения Шурика','Приключения Тома Соера']
+        assert collector.get_books_for_children()==['Дюна','Приключения Шурика','Приключения Тома Сойера']
 
-    # тест добавления книги в Избранное
-    def test_add_book_in_favorites_add_book_list_favorites(self):
+    # тест: книга успешно добавляется в избранное
+    def test_add_book_in_favorites_adds_book_to_favorites(self):
         collector = BooksCollector()
         # добавляем книгу
         collector.add_new_book('Дюна')
@@ -196,8 +196,8 @@ class TestBooksCollector:
         # проверяем список избранных книг
         assert collector.favorites==['Дюна']
 
-    # тест невозможность добавить книгу в избранное если список книг пуст
-    def test_add_book_in_favorites_no_book_list_favorites_null(self):
+    # тест: нельзя добавить книгу в избранное, если её нет в коллекции
+    def test_add_book_in_favorites_cannot_add_nonexistent_book(self):
         collector = BooksCollector()
         # добавление книги в избранное
         collector.add_book_in_favorites('Дюна')
@@ -205,25 +205,25 @@ class TestBooksCollector:
         assert collector.favorites==[]
 
     # тестируем удаляем книгу из Избранного
-    def test_delete_book_from_favorites_list_book_sucsess_delete_book(self):
+    def test_delete_book_from_favorites_successfully_removes_book(self):
         collector = BooksCollector()
         # добавляем книгу
-        collector.add_new_book('Домовенок Кузя')
+        collector.add_new_book('Домовёнок Кузя')
         # добавление книги в избранное
-        collector.add_book_in_favorites('Домовенок Кузя')
+        collector.add_book_in_favorites('Домовёнок Кузя')
         # удаление книги из избранного
-        collector.delete_book_from_favorites('Домовенок Кузя')
+        collector.delete_book_from_favorites('Домовёнок Кузя')
         # проверяем список избранных книг
         assert collector.favorites==[]
 
     # получаем список Избранных книг из двух книг
-    def test_get_list_of_favorites_books_add_two_favorites_get_list(self):
+    def test_get_list_of_favorites_books_returns_correct_selection(self):
         collector = BooksCollector()
         # добавляем книгу
         collector.add_new_book('Дюна')
         collector.add_new_book('Приключения Шурика')
         collector.add_new_book('Оно')
-        collector.add_new_book('Приключения Тома Соера')
+        collector.add_new_book('Приключения Тома Сойера')
         # добавляем книги в избранное
         collector.add_book_in_favorites('Дюна')
         collector.add_book_in_favorites('Оно')
