@@ -235,4 +235,3 @@ class TestBooksCollector:
         # проверяем список избранных книг
         assert collector.get_list_of_favorites_books()==['Шерлок Холмс']
 
-
