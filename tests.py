@@ -75,7 +75,7 @@ class TestBooksCollector:
         assert collector.books_genre['Мстители'] == ''
 
     # тестируем устанавку жанра книге
-    def test_set_book_genre_sucsess(self):
+    def test_set_book_genre_success(self):
         collector = BooksCollector()
         # добавляем книгу
         collector.add_new_book('Франкенштейн')
@@ -99,7 +99,7 @@ class TestBooksCollector:
         # добавляем книгу
         collector.add_new_book('Война и мир')
         #добавляем несуществующий жанр книге
-        collector.set_book_genre('Война и мир', 'Драмма')
+        collector.set_book_genre('Война и мир', 'Драма')
         #проверяем установку жанра
         assert collector.books_genre['Война и мир'] == ''
 
@@ -127,17 +127,17 @@ class TestBooksCollector:
         collector.add_new_book('Дюна')
         collector.add_new_book('Основание')
         collector.add_new_book('Гиперион')
-        collector.add_new_book('Приключения Тома Соера')
+        collector.add_new_book('Приключения Тома Сойера')
         #добавляем жанр книге
         collector.set_book_genre('Дюна', 'Фантастика')
         collector.set_book_genre('Основание', 'Фантастика')
         collector.set_book_genre('Гиперион', 'Фантастика')
-        collector.set_book_genre('Приключения Тома Соера', 'Мультфильмы')
+        collector.set_book_genre('Приключения Тома Сойера', 'Мультфильмы')
         # проверяем список
         assert ['Дюна','Основание','Гиперион'] == collector.get_books_with_specific_genre('Фантастика')
 
     # тестируем вывод пустого списка книг жанра не из списка, пустого жанра и жанра в верхнем регистре
-    @pytest.mark.parametrize('genre',['Ужас','','УЖАСЫ','Комедии']) 
+    @pytest.mark.parametrize('genre',['Ужас','','УЖАСЫ']) 
     def test_get_books_with_specific_genre_returns_empty_for_invalid_genres(self, genre):
         collector = BooksCollector()
         # добавляем книгу
@@ -210,6 +210,15 @@ class TestBooksCollector:
         # проверяем список избранных книг
         assert collector.favorites==[]
 
+    # тест на удаление книги из пустого списка избранного 
+    @pytest.mark.parametrize('book_name', ['13 негритят','',None,'   ',])
+    def test_delete_book_from_favorites_remove_book_empty_list(self, book_name):
+        collector = BooksCollector()
+        # добавляем книги в избранное
+        collector.delete_book_from_favorites(book_name)
+        # проверяем список избранных книг
+        assert collector.get_list_of_favorites_books()==[]
+
     # получаем список Избранных книг из двух книг
     def test_get_list_of_favorites_books_returns_correct_selection(self):
         collector = BooksCollector()
@@ -234,4 +243,6 @@ class TestBooksCollector:
         collector.add_book_in_favorites('Шерлок Холмс')
         # проверяем список избранных книг
         assert collector.get_list_of_favorites_books()==['Шерлок Холмс']
+
+
 

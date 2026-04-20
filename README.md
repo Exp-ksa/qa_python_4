@@ -62,6 +62,10 @@ def test_add_book_in_favorites_cannot_add_nonexistent_book(self):
 # тестируем удаляем книгу из Избранного
 def test_delete_book_from_favorites_successfully_removes_book(self):
 
+# тест на удаление книги из пустого списка избранного 
+@pytest.mark.parametrize('book_name', ['13 негритят','',None,'   ',])
+def test_delete_book_from_favorites_remove_book_empty_list(self, book_name):
+
 # получаем список Избранных книг из двух книг
 def test_get_list_of_favorites_books_returns_correct_selection(self):
 
