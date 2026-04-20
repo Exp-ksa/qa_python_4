@@ -27,6 +27,9 @@ def test_set_book_genre_sucsess(self):
 # тест отсутсвия устанавки жанра несуществующей книге
 def test_set_book_genre_non_existent_book_not_set_genre(self):
 
+# тест установки жанра не из словаря genre
+def test_set_book_genre_invalid_input_not_set(self):
+
 # тест получения жанра книги по её имени
 @pytest.mark.parametrize('book, genre',[['Тайна Коко','Мультфильмы']])
 def test_get_book_genre_name_book_success_get_genre(self, book, genre):

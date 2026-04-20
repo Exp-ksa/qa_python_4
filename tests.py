@@ -88,12 +88,20 @@ class TestBooksCollector:
     # тест отсутсвия устанавки жанра несуществующей книге
     def test_set_book_genre_non_existent_book_not_set_genre(self):
         collector = BooksCollector()
-        # добавляем книгу
-        collector.add_new_book('Другая книга')
         #добавляем жанр несуществующей книге
-        collector.set_book_genre('Оно', 'Ужасы')
+        collector.set_book_genre('Другая книга', 'Ужасы')
         #проверяем установку жанра
-        assert 'Оно' not in collector.books_genre and collector.books_genre['Другая книга'] == ''
+        assert collector.books_genre.get('Другая книга') is None
+
+    # тест установки жанра не из словаря genre
+    def test_set_book_genre_invalid_input_not_set(self):
+        collector = BooksCollector()
+        # добавляем книгу
+        collector.add_new_book('Война и мир')
+        #добавляем несуществующий жанр книге
+        collector.set_book_genre('Война и мир', 'Драмма')
+        #проверяем установку жанра
+        assert collector.books_genre['Война и мир'] == ''
 
     # тест получения жанра книги по её имени
     @pytest.mark.parametrize('book, genre',[['Тайна Коко','Мультфильмы']])
