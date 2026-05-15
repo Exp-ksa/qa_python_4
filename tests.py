@@ -120,7 +120,7 @@ class TestBooksCollector:
         #проверяем жанр у книги с жанром
         assert collector.get_book_genre('Умка') is None
 
-    # тестируем вывод списока книг с определённым жанром
+    # тестируем вывод списка книг с определённым жанром
     def test_get_books_with_specific_genre_returns_correct_books(self):
         collector = BooksCollector()
         # добавляем книгу
